@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Stub by xdbr</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Stub</h1>
+        <p>A language-agnostic project generator</p>
+
+        <p class="view"><a href="https://github.com/xdbr/stub">View the Project on GitHub <small>xdbr/stub</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/xdbr/stub/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/xdbr/stub/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/xdbr/stub">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="stub" class="anchor" href="#stub"><span class="octicon octicon-link"></span></a>stub</h1>
+
+<p>stunningly simple &amp; stupid language agnostic project generator</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Run</p>
+
+<pre><code>curl --silent https://raw.github.com/xdbr/stub/master/install.sh | $SHELL
+</code></pre>
+
+<p>...and follow the instructions</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="stubbing-out-a-project" class="anchor" href="#stubbing-out-a-project"><span class="octicon octicon-link"></span></a>Stubbing out a project</h3>
+
+<h4>
+<a name="using-local-template" class="anchor" href="#using-local-template"><span class="octicon octicon-link"></span></a>Using local template</h4>
+
+<pre><code>stub project:new template=cpp to=var/foo name=foobar version=1.2.3
+</code></pre>
+
+<h4>
+<a name="using-remote-git-repo-template" class="anchor" href="#using-remote-git-repo-template"><span class="octicon octicon-link"></span></a>Using remote (git-repo) template</h4>
+
+<pre><code>stub project:new template=http://path/to/repo.git to=var/bar name=foobar version=1.2.3
+</code></pre>
+
+<h4>
+<a name="finding-out-about-variables-that-need-to-be-set--optionally-can-be-set" class="anchor" href="#finding-out-about-variables-that-need-to-be-set--optionally-can-be-set"><span class="octicon octicon-link"></span></a>Finding out about variables that need to be set / optionally can be set</h4>
+
+<pre><code>stub project:info template=template-name
+</code></pre>
+
+<h3>
+<a name="defining-a-project-stub" class="anchor" href="#defining-a-project-stub"><span class="octicon octicon-link"></span></a>Defining a project stub</h3>
+
+<ol>
+<li>Generate your skeleton of how you want your files and folders to be layed out</li>
+<li>substitute all variables with mustaches that you liked to be filled in, e.g. <code>class {{classname}}</code>. This will be set by using <code>stub project new template=yourtemplatename classname=foo</code>
+</li>
+<li>write a file <code>project.json</code>, put it in the top directory of you skeleton.</li>
+<li>Use the following layout for your <code>project.json</code>:</li>
+</ol><pre><code>    {
+      "requires": {
+        "name"   : "string",
+        "version": "versionstring"
+      },
+      "optional": {
+        "author": "Quux"
+      }
+    }
+</code></pre>
+
+<h2>
+<a name="finding-all-tasks" class="anchor" href="#finding-all-tasks"><span class="octicon octicon-link"></span></a>Finding all tasks</h2>
+
+<pre><code>stub -T
+stub --tasks
+</code></pre>
+
+<h2>
+<a name="listing-all-templates" class="anchor" href="#listing-all-templates"><span class="octicon octicon-link"></span></a>Listing all templates</h2>
+
+<pre><code>stub list:templates
+</code></pre>
+
+<h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>Daniel B <a href="mailto:daniel@codeedition.de">daniel@codeedition.de</a></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>WTFPL</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/xdbr">xdbr</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
