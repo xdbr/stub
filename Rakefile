@@ -1,8 +1,14 @@
+VERSION = '0.3.2'
 DEBUG = ENV['DEBUG'] || false
 VERBOSE = false
 
 task :default => [ 'template:new' ]
 
+desc 'Show stub-version'
+task :version do
+  puts "stub, version #{VERSION}"
+  puts "More info: https://github.com/xdbr/stub"
+end
 
 namespace 'template' do
   desc 'Get info about a project'
