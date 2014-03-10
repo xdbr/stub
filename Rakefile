@@ -1,7 +1,7 @@
 DEBUG = ENV['DEBUG'] || false
 VERBOSE = false
 
-task :default => [ 'project:new' ]
+task :default => [ 'template:new' ]
 
 namespace 'list' do
 
@@ -93,9 +93,6 @@ class Hash
         die "Required argument missing: #{key}", 66
       else
         self['requires'][key] = ENV[key]
-      end
-    end
-  end
 
   def check_optional_args!
     self['optional'].keys do |key|

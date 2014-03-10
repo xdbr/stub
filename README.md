@@ -3,6 +3,10 @@ stub
 
 stunningly simple & stupid language agnostic project generator
 
+With *stub*, you can create new projects instantly and have the most essential parts renamed and substituted.
+
+Likewise, you can use *stub* to create new classes inside existsing projects in a second.
+
 ## Installation
 Run
     
@@ -16,15 +20,15 @@ Run
 
 #### Using local template
 
-    stub project:new template=cpp to=var/foo name=foobar version=1.2.3
+    stub template:new template=cpp to=var/foo name=foobar version=1.2.3
 
 #### Using remote (git-repo) template
 
-    stub project:new template=http://path/to/repo.git to=var/bar name=foobar version=1.2.3
+    stub template:new template=http://path/to/repo.git to=var/bar name=foobar version=1.2.3
 
 #### Finding out about variables that need to be set / optionally can be set
 
-    stub project:info template=template-name
+    stub template:info template=template-name
 
 ### Defining a project stub
 
