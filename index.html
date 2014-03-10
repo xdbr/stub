@@ -33,7 +33,45 @@
 
 <p>stunningly simple &amp; stupid language agnostic project generator</p>
 
+<p>With <em>stub</em>, you can create new projects instantly and have the most essential parts renamed and substituted.</p>
+
+<p>Likewise, you can use <em>stub</em> to create new classes inside existsing projects in a second.</p>
+
 <h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<ul>
+<li>
+<p>Stub-template example:</p>
+
+<p><code>https://github.com/xdbr/stub-template-typesetting</code></p>
+</li>
+<li><p>Project generated / substitutions made:</p></li>
+</ul><pre><code>.                                           .--------[ main.pandoc ] --------------.
+|-- README.md                               | % {{head1}}   &lt;-- these will         |
+|-- Rakefile                                | % {{head2}}   &lt;-- be stubstituted    |
+|-- bibliography.bib                        | % {{head3}}   &lt;-- by stub            |
+|-- chapters                                |                                      |
+|   |-- 100-Introduction.pandoc             | &lt;#include resources/gpp-defines.gpp&gt; |
+|   |-- 200-Examples.pandoc                 |                                      |
+|   `-- 900-End.pandoc                      | &lt;#part Part I&gt;                       |
+|-- main.pandoc  ---D E T A I L  V I E W---&gt;|                                      |
+|-- project.json                            | # Introduction                       |
+`-- resources                               |                                      |
+    |-- ditaa                               | [...]                                |
+    |   `-- typesetting-process.ditaa       |                                      |
+    `-- gpp-defines.gpp                     '--------------------------------------'
+</code></pre>
+
+
+
+<ul>
+<li>
+<p>Command used</p>
+
+<p><code>stub template:new template=https://github.com/xdbr/stub-template-typesetting to=destinaton-dir head1=foobar</code></p>
+</li>
+</ul><h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>Run</p>
@@ -49,23 +87,21 @@
 <h3>
 <a name="stubbing-out-a-project" class="anchor" href="#stubbing-out-a-project"><span class="octicon octicon-link"></span></a>Stubbing out a project</h3>
 
-<h4>
-<a name="using-local-template" class="anchor" href="#using-local-template"><span class="octicon octicon-link"></span></a>Using local template</h4>
+<pre><code>stub template:new template=TEMPLATE-NAME to=DESTINATION_DIR variable1=value1 variable2=value2 ...
 
-<pre><code>stub project:new template=cpp to=var/foo name=foobar version=1.2.3
-</code></pre>
-
-<h4>
-<a name="using-remote-git-repo-template" class="anchor" href="#using-remote-git-repo-template"><span class="octicon octicon-link"></span></a>Using remote (git-repo) template</h4>
-
-<pre><code>stub project:new template=http://path/to/repo.git to=var/bar name=foobar version=1.2.3
+stub template:new template=http://path/to/repo.git to=DESTINATION_DIR variable1=value1 variable2=value2 ...
 </code></pre>
 
 <h4>
 <a name="finding-out-about-variables-that-need-to-be-set--optionally-can-be-set" class="anchor" href="#finding-out-about-variables-that-need-to-be-set--optionally-can-be-set"><span class="octicon octicon-link"></span></a>Finding out about variables that need to be set / optionally can be set</h4>
 
-<pre><code>stub project:info template=template-name
+<pre><code>stub template:info template=TEMPLATE-NAME-or-path-to-repo
 </code></pre>
+
+<h2>
+<a name="creating-projects-stubs" class="anchor" href="#creating-projects-stubs"><span class="octicon octicon-link"></span></a>Creating projects stubs</h2>
+
+<p>Creating a project stub to be reused is straightforward and simple. Here's a quick rundown:</p>
 
 <h3>
 <a name="defining-a-project-stub" class="anchor" href="#defining-a-project-stub"><span class="octicon octicon-link"></span></a>Defining a project stub</h3>
@@ -74,7 +110,7 @@
 <li>Generate your skeleton of how you want your files and folders to be layed out</li>
 <li>substitute all variables with mustaches that you liked to be filled in, e.g. <code>class {{classname}}</code>. This will be set by using <code>stub project new template=yourtemplatename classname=foo</code>
 </li>
-<li>write a file <code>project.json</code>, put it in the top directory of you skeleton.</li>
+<li>write a file <code>project.json</code>, put it in the top directory of your skeleton.</li>
 <li>Use the following layout for your <code>project.json</code>:</li>
 </ol><pre><code>    {
       "requires": {
@@ -87,23 +123,32 @@
     }
 </code></pre>
 
+<p>Note that:</p>
+
+<p>a) in this example, the variables <code>name</code> and <code>version</code> will be required upon using this stub
+b) the optional variables <em>can</em> be set (name="me") or their default values will be used ("Quux")
+c) the definitions <code>string</code> and <code>versionstring</code> only carry an informative value, but will not be validated</p>
+
 <h2>
-<a name="finding-all-tasks" class="anchor" href="#finding-all-tasks"><span class="octicon octicon-link"></span></a>Finding all tasks</h2>
+<a name="more-usage" class="anchor" href="#more-usage"><span class="octicon octicon-link"></span></a>More Usage</h2>
+
+<h3>
+<a name="finding-all-tasks" class="anchor" href="#finding-all-tasks"><span class="octicon octicon-link"></span></a>Finding all tasks</h3>
 
 <pre><code>stub -T
 stub --tasks
 </code></pre>
 
-<h2>
-<a name="listing-all-templates" class="anchor" href="#listing-all-templates"><span class="octicon octicon-link"></span></a>Listing all templates</h2>
+<h3>
+<a name="listing-all-templates" class="anchor" href="#listing-all-templates"><span class="octicon octicon-link"></span></a>Listing all templates</h3>
 
-<pre><code>stub list:templates
+<pre><code>stub template:list
 </code></pre>
 
 <h2>
 <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
 
-<p>Daniel B <a href="mailto:daniel@codeedition.de">daniel@codeedition.de</a></p>
+<p>Daniel <a href="mailto:dbrx@crux.uberspace.de">dbrx@crux.uberspace.de</a></p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
