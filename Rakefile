@@ -7,7 +7,7 @@ namespace 'list' do
 
   desc 'List available templates'
   task :templates do
-    FileList['template/*'].each do |tmpl|
+    FileList['template/*'].exclude('template/.store').each do |tmpl|
       puts tmpl
     end
   end
@@ -44,7 +44,7 @@ namespace 'template' do
     if is_local
       project = JSON.load(File.new("./template/#{ENV['template']}/project.json"))
     else
-      die "A project already exists at '#{ENV['to']}'!\nPlease remove the directory and start again.", 12 if File.exists?("#{ENV['to']}")
+      die "A project already exists at '#{ENV['to']}'!\nPlease remove the directory and start again.", 12 if File.exists? ENV['to']
       template = %x: git clone #{ENV['template']} #{ENV['to']} :
       # save this to some tmp/ dir first and delete afterwards if necessary
       project = JSON.load(File.new("./#{ENV['to']}/project.json"))
@@ -93,6 +93,9 @@ class Hash
         die "Required argument missing: #{key}", 66
       else
         self['requires'][key] = ENV[key]
+      end
+    end
+  end
 
   def check_optional_args!
     self['optional'].keys do |key|
