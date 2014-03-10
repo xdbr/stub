@@ -44,7 +44,7 @@ namespace 'template' do
       die "A project already exists at '#{ENV['to']}'!\nPlease remove the directory and start again.", 12 if File.exists? ENV['to']
       template = %x: git clone #{ENV['template']} #{ENV['to']} :
       # save this to some tmp/ dir first and delete afterwards if necessary
-      project = JSON.load(File.new("./#{ENV['to']}/project.json"))
+      project = JSON.load(File.new("#{ENV['template']}/project.json"))
     end
     project.check_required_args!
     project.check_optional_args!
