@@ -56,7 +56,7 @@ Run
 
 ## Listing all templates
 
-    stub list:templates
+    stub template:list
 
 ## Author
 

@@ -3,15 +3,6 @@ VERBOSE = false
 
 task :default => [ 'template:new' ]
 
-namespace 'list' do
-
-  desc 'List available templates'
-  task :templates do
-    FileList['template/*'].exclude('template/.store').each do |tmpl|
-      puts tmpl
-    end
-  end
-end
 
 namespace 'template' do
   desc 'Get info about a project'
@@ -56,6 +47,14 @@ namespace 'template' do
     copy_project project['name'], project['template'], project['to'] if is_local
     do_substitute project, project['to'], project.keys
   end
+
+  desc 'List available templates'
+  task :list do
+    FileList['template/*'].exclude('template/.store').each do |tmpl|
+      puts tmpl
+    end
+  end
+
 end # namespace
 
 
