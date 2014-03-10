@@ -1,4 +1,4 @@
-VERSION = '0.3.3'
+VERSION = '0.3.5'
 DEBUG = ENV['DEBUG'] || false
 VERBOSE = false
 
