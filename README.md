@@ -61,3 +61,18 @@ Daniel B <daniel@codeedition.de>
 ## License
 
 WTFPL
+
+
+
+
+## Disclaimer
+
+This is still an early release and the API might still change in future releases.
+
+This is a complete rewrite of *stub <= v0.2.6* favoring *make* for its unique beauty and simplicity over *rake*.
+
+Use at your own risk (pleasure).
+
+## Synopsis
+
+## Usage

@@ -1,0 +1,10 @@
+[help]
+	stub-template-cpp
+
+	this is a stub-project for building cpp-projects
+
+[required]
+	T
+	author
+
+[optional]
