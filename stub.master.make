@@ -3,26 +3,29 @@ STUBFILE := stub.make
 extract = @perl -ne 's/^\s*// and print if $$rc = /^\[$(1)\]/.../^\[/ and $$rc !~ /(^1|E0)$$/' $(2)
 
 # http://stackoverflow.com/a/8080887
-# MAKEFLAGS += $(if $(value VERBOSE),,--no-print-directory)
-# --silent --ignore-errors
+MAKEFLAGS += $(if $(value VERBOSE),,--no-print-directory)
+#  --silent --ignore-errors
+
+# http://stackoverflow.com/a/21740114
+.SILENT: help
 
 default: stub-help
 
 # Excellent help here:
 # http://stackoverflow.com/questions/4728810/makefile-variable-as-prerequisite
-guard-%:
+required-variable-%:
 	@if [ "${${*}}" == "" ]; then \
 		echo ;\
 	 	echo "stub: error: Variable \`$*' not set"; \
 	 	exit 1; \
 	fi
 
-warn-%:
+optional-variable-%:
 	@if [ "${${*}}" == "" ]; then \
 		echo ;\
-	 	echo "stub: warning: Variable \`$*' could be set"; \
+	 	echo "stub: warning: Optional variable \`$*' not set"; \
 		while true; do \
-				echo "Continue? [yN]" ; \
+				echo "Continue? [yn]" ; \
 		    read yn; \
 		    case $$yn in \
 		        [Yy]* ) break ;; \
@@ -48,12 +51,15 @@ stub-help:
 	@echo 'stub stub-help           # general help (this page)'
 	@echo 'stub t-help T=template   # project specific help'
 
-t-help: guard-T
-	@ $(MAKE) -C $(T) -f $(STUBFILE) help
-	@ echo template targets:
-	@ perl -ne 'print "$$1 ", $$3 ? "\t# $$3\n" : "\n" if /^(\w+):(.*?#(.*))?/' $(T)/$(STUBFILE)
+# t-help: required-variable-T
+# 	@ $(MAKE) -C $(T) -f $(STUBFILE) help
+# 	@ echo template targets:
+# 	@ perl -ne 'print "$$1 ", $$3 ? "\t# $$3\n" : "\n" if /^(\w+):(.*?#(.*))?/' $(T)/$(STUBFILE)
 
-ifdef T
+FROM = $(T)
+TEMPLATE = $(T)
+
+ifdef TEMPLATE
 include $(T)/$(STUBFILE)
 endif
 
