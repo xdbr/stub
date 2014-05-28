@@ -1,23 +1,26 @@
+version = 0.1.0
+view ?= jade
+code ?= coffee
+
 default: help
 
 help:
-	@echo barbaz
+	@echo stub template for angular components v$(version)
 
-component: required-variable-TO controller directive factory filter service view
-controller: required-variable-TO required-variable-name make-directory-$(TO)
-	cp $(FROM)/controller.coffee $(TO)/$(name).coffee						# rename
-	perl -i -pe 's{{{name}}}{$(name)}g' $(TO)/$(name).coffee		# replace
+component: ng-controller ng-directive ng-factory ng-filter ng-service ng-view
 
-# mkdir -p $(TO)
-ng-%: required-variable-TO required-variable-name
-	mkdir -p $(TO)
-	cp $(FROM)/$*.coffee $(TO)/$(name)-$*.coffee
-	perl -i -pe 's{{{name}}}{$(name)}g' $(TO)/$(name)-$*.coffee
+ng-view: type:=view
+ng-controller ng-directive ng-factory ng-filter ng-service: type:=code
 
-directive: ng-directive
-factory: ng-factory
-filter: ng-filter
-service: ng-service
-view: required-variable-TO required-variable-name make-directory-$(TO)
-	cp $(FROM)/controller.coffee $(TO)/$(name).jade
-	perl -i -pe 's{{{name}}}{$(name)}g' $(TO)/$(name).jade
+ng-%: required-variable-TO required-variable-name optional-variable-code optional-variable-view
+	@ echo creating $(TO)/$(name)-$*.$($(type)) ...
+	@ mkdir -p $(TO)
+	@ cp $(FROM)/$*.$($(type)) $(TO)/$(name)-$*.$($(type))
+	@ perl -i -pe 's{{{name}}}{$(name)}g' $(TO)/$(name)-$*.$($(type))
+	@ for i in controller view; do \
+		[[ -e $(TO)/$(name)-$$i.$($(type)) ]] \
+		&& echo renaming $(TO)/$(name)-$$i.$($(type)) $(TO)/$(name).$($(type)) ...\
+		&& mv $(TO)/$(name)-$$i.$($(type)) $(TO)/$(name).$($(type)) \
+		|| true ;\
+		done # posthook for controllers and views only.
+
