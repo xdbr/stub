@@ -103,17 +103,26 @@ show: required-variable-template
 show-commands: required-variable-template
 	@cat $(template)/stub.make | perl -ne 's/^\t(?=\w)// and print'
 
+commands:required-variable-template
+	@cat $(template)/stub.make | perl -ne 's/^(\w+):// and print "\t$$1\n"'
+
 info:
 	@echo show info of project.make
 
 tree:
 
+do-update := $(shell cd $(1) && git pull)
+
 update: required-variable-from
 	@echo updating template FOO
-	@cd $(dest)/$(repo) && git pull
+	$(call do-update,$(dest)/$(repo))
 
 update-all:
-	@echo updating all templates
+	@ for i in $(shell cat $(STUB_HOME)/.installed); \
+		do \
+			echo $$i; \
+			cd $(STUB_HOME)/templates/$$i && git pull; \
+		done
 
 upgrade:
 	@echo upgrading stub
@@ -125,6 +134,7 @@ upgrade:
 FROM = $(T)
 TEMPLATE := $(T)
 
+make-directory-%: ; mkdir -p $(*)
 ifdef TEMPLATE
 include $(T)/$(STUBFILE)
 endif
